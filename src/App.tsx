@@ -1,16 +1,14 @@
-import React from "react";
-import logo from "./logo.svg";
 import { Counter } from "./features/counter/Counter";
 import "./App.css";
 import { Link, Route, Routes } from "react-router-dom";
-import Testing from "./pages/testing";
-import Asdf from "./pages/Default";
 import Default from "./pages/Default";
 import Main from "./pages/Main";
 import Send from "./pages/Send";
 import Add from "./pages/Add";
 import Create from "./pages/Create";
 import Verify from "./pages/Verify";
+import Sidebar from "./components/Sidebar";
+import Header from "./components/Header";
 
 function App() {
   return (
@@ -18,11 +16,9 @@ function App() {
       style={{ display: "flex", height: "100vh", width: "100%" }}
       className="App"
     >
-      <div style={{ width: "15%", backgroundColor: "#FFFFFF" }}></div>
-      <div style={{ width: "85%", background: "#AAAAAA" }}>
-        <header style={{ height: "10vh", backgroundColor: "white" }}>
-          asdf
-        </header>
+      <Sidebar />
+      <div style={{ width: "100%", background: "#F6F8F8" }}>
+        <Header />
         <Link to="/">main</Link>
         <Link to="/main">main</Link>
         <Link to="/main">main</Link>
