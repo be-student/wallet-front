@@ -1,7 +1,11 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useAppDispatch } from "../app/hooks";
+import { increment } from "../features/counter/counterSlice";
 
 const Header = () => {
   const [modal, setModal] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
   return (
     <header
       style={{
@@ -50,8 +54,17 @@ const Header = () => {
                 boxShadow: "0 0 4px #888888",
               }}
             >
-              <div>계정 생성</div>
-              <div>지갑 연결 / 지갑 연결 해제</div>
+              <button style={{ textDecoration: "none", border: "none" }}>
+                <Link to="/create">계정 생성</Link>
+              </button>
+              <button
+                style={{ textDecoration: "none", border: "none" }}
+                onClick={() => {
+                  dispatch(increment());
+                }}
+              >
+                <Link to="/verify">지갑 연결 / 지갑 연결 해제</Link>
+              </button>
             </div>
           </div>
         )}

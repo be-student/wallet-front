@@ -19,9 +19,6 @@ function App() {
       <Sidebar />
       <div style={{ width: "100%", background: "#F6F8F8" }}>
         <Header />
-        <Link to="/">main</Link>
-        <Link to="/main">main</Link>
-        <Link to="/main">main</Link>
         <Routes>
           <Route path="/" element={<Default />}></Route>
           <Route path="/main" element={<Main />}></Route>

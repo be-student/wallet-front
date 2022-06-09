@@ -7,7 +7,6 @@ interface Props {
 }
 const SideButton: FC<Props> = ({ children, where }) => {
   const location = useLocation();
-  console.log(location);
   return (
     <Link
       to={where}
