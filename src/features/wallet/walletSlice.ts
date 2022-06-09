@@ -168,10 +168,31 @@ export const walletSlice = createSlice({
     },
 
     onHideUser: (state, action: PayloadAction<string>) => {
-      const currentUserIndex = state.users.findIndex(
-        (user) => user.walletAddress === state.currentWallet
+      const targetUserIndex = state.users.findIndex(
+        (user) => user.walletAddress === action.payload
       );
-      state.users[currentUserIndex].visible = false;
+      state.users[targetUserIndex].visible = false;
+    },
+    onReconnectUserWithKey: (state, action: PayloadAction<string>) => {
+      const targetUserIndex = state.users.findIndex(
+        (user) => user.privateKey === action.payload
+      );
+      state.users[targetUserIndex].visible = true;
+    },
+    onReconnectUserWithMnemonic: (
+      state,
+      action: PayloadAction<Array<string>>
+    ) => {
+      const newUsersArray = [...current(state.users)];
+      const targetUserIndex = newUsersArray.findIndex((user) => {
+        for (let i = 0; i < 12; i++) {
+          if (user.nimonics[i] !== action.payload[i]) {
+            return false;
+          }
+        }
+        return true;
+      });
+      state.users[targetUserIndex].visible = true;
     },
   },
 });
@@ -182,7 +203,9 @@ export const {
   onChangeCurrentUser,
   onChangeUserCoinVisible,
   onHideUser,
+  onReconnectUserWithKey,
   onSendToken,
+  onReconnectUserWithMnemonic,
 } = walletSlice.actions;
 
 export const selectUsers = (state: RootState) => state.wallet.users;
