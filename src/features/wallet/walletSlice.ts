@@ -28,16 +28,24 @@ interface CoinBase {
   symbol: string;
 }
 
+interface Log {
+  from: string;
+  to: string;
+  amount: number;
+  coinAddress: string;
+}
 interface InitialWallets {
   users: Users;
   currentWallet: string;
   allCoins: { [index: string]: CoinBase };
+  logs: Array<Log>;
 }
 
 const initialWallets: InitialWallets = {
   currentWallet: "",
   users: [],
   allCoins: {},
+  logs: [],
 };
 
 export interface CreateToken {
@@ -66,7 +74,7 @@ export const walletSlice = createSlice({
     },
     onCreateToken: (state, action: PayloadAction<CreateToken>) => {
       if (state.currentWallet === "") {
-        alert("please login first");
+        alert("지갑 생성을 먼저 해주세요");
         return;
       }
 
@@ -94,7 +102,11 @@ export const walletSlice = createSlice({
       state.currentWallet = action.payload;
     },
     onChangeUserCoinVisible: (state, action: PayloadAction<string>) => {
-      if (!state.allCoins[action.payload] || state.currentWallet === "") {
+      if (state.currentWallet === "") {
+        alert("지갑 생성을 먼저 해주세요");
+        return;
+      }
+      if (!state.allCoins[action.payload]) {
         alert("토큰 추가 실패");
         return;
       }
@@ -119,6 +131,10 @@ export const walletSlice = createSlice({
       alert("토큰 추가 성공");
     },
     onSendToken: (state, action: PayloadAction<SendToken>) => {
+      if (state.currentWallet === "") {
+        alert("지갑 생성을 먼저 해주세요");
+        return;
+      }
       const currentUserIndex = state.users.findIndex(
         (user) => user.walletAddress === state.currentWallet
       );
@@ -160,10 +176,20 @@ export const walletSlice = createSlice({
             symbol: state.allCoins[action.payload.coinAddress].symbol,
             visible: false,
           };
+      const newLog: Log[] = [
+        ...state.logs,
+        {
+          from: state.currentWallet,
+          to: action.payload.walletAddress,
+          amount: action.payload.amount,
+          coinAddress: action.payload.coinAddress,
+        },
+      ];
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       (state.users[currentUserIndex] = currentUserData),
         (state.users[targetUserIndex].coins[action.payload.coinAddress] =
-          newTargetData);
+          newTargetData),
+        (state.logs = newLog);
       alert("전송 성공");
     },
 
@@ -178,6 +204,7 @@ export const walletSlice = createSlice({
         (user) => user.privateKey === action.payload
       );
       state.users[targetUserIndex].visible = true;
+      alert("reconnect success");
     },
     onReconnectUserWithMnemonic: (
       state,
@@ -193,6 +220,7 @@ export const walletSlice = createSlice({
         return true;
       });
       state.users[targetUserIndex].visible = true;
+      alert("reconnect success");
     },
   },
 });
@@ -227,6 +255,24 @@ export const selectCurrentUserData = (state: RootState) => {
   );
 
   return temp[currentUserIndex];
+};
+export const selectLogs = (state: RootState) => {
+  const nowLogs: Log[] = [];
+  state.wallet.logs.map((log) => {
+    if (
+      log.from === state.wallet.currentWallet ||
+      log.to === state.wallet.currentWallet
+    ) {
+      nowLogs.push(log);
+    }
+  });
+  return nowLogs.map((log, index) => ({
+    id: index,
+    from: log.from,
+    to: log.to,
+    symbol: state.wallet.allCoins[log.coinAddress].symbol,
+    amount: log.amount,
+  }));
 };
 export const selectAllCoins = (state: RootState) => state.wallet.allCoins;
 export default walletSlice.reducer;

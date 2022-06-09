@@ -1,6 +1,8 @@
 export const DataColumns = [
   { id: "1", field: "from", headerName: "보낸 주소", width: 400 },
   { id: "2", field: "to", headerName: "받는 주소", width: 400 },
+  { id: "3", field: "symbol", headerName: "토큰 명", width: 200 },
+  { id: "4", field: "amount", headerName: "보낸 양", width: 200 },
 ];
 
 export const Transactions = [

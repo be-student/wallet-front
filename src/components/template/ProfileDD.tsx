@@ -96,7 +96,11 @@ const ProfileDD = () => {
                 onClick={() => {
                   dispatch(onChangeCurrentUser(user.walletAddress));
                 }}
-                style={{ padding: "0.5rem 0.5rem" }}
+                style={{
+                  padding: "0.5rem 0.5rem",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
                 key={user.walletAddress}
               >
                 {user.walletAddress}
@@ -107,7 +111,10 @@ const ProfileDD = () => {
                     backgroundColor: "#06B2BD",
                     borderRadius: "5px",
                   }}
-                  onClick={() => dispatch(onHideUser(user.walletAddress))}
+                  onClick={() => {
+                    dispatch(onHideUser(user.walletAddress));
+                    dispatch(onChangeCurrentUser(""));
+                  }}
                 >
                   X
                 </ButtonBase>

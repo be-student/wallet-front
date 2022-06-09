@@ -15,11 +15,15 @@ import { useState } from "react";
 import BaseCard from "../components/template/Card";
 import { DataColumns, Transactions } from "../constants/Info";
 import { useAppSelector } from "../features/core/hooks";
-import { selectCurrentUserData } from "../features/wallet/walletSlice";
+import {
+  selectCurrentUserData,
+  selectLogs,
+} from "../features/wallet/walletSlice";
 
 const Info = () => {
   const selector = useAppSelector(selectCurrentUserData);
   const [nowWatching, setNowWatching] = useState<any>(null);
+  const nowLog = useAppSelector(selectLogs);
   return (
     <Grid container spacing={0}>
       <Grid item xs={12} lg={12}>
@@ -62,12 +66,12 @@ const Info = () => {
           </Stack>
         </BaseCard>
       </Grid>
-      <Grid item xs={12} lg={12}>
+      <Grid item xs={10} lg={12}>
         <BaseCard title="토큰 거래 내역">
           <div style={{ height: 430 }}>
             <DataGrid
               columns={DataColumns}
-              rows={Transactions}
+              rows={nowLog}
               rowsPerPageOptions={[25, 50, 100]}
               pageSize={6}
             />
