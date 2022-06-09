@@ -1,12 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, AppThunk } from "../core/store";
 
-export interface CounterState {
-  value: number;
-  status: "idle" | "loading" | "failed";
+interface Coin{
+    
 }
 
-const initialState: CounterState = {
+interface UserState {
+  loggedAddress: string;
+
+}
+
+const initialState = {
   value: 0,
   status: "idle",
 };
