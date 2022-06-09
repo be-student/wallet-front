@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   Grid,
   Stack,
@@ -12,18 +11,22 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import BaseCard from "../components/template/Card";
 import Button from "../components/core/Button";
+import { useEffect, useRef, useState } from "react";
 
 const Create = () => {
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [showPasswordVerify, setShowPasswordVerify] = React.useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordVerify, setShowPasswordVerify] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
   const handleClickShowPasswordVerify = () =>
     setShowPasswordVerify(!showPasswordVerify);
   const handleMouseDownPasswordVerify = () =>
     setShowPasswordVerify(!showPasswordVerify);
-
-  const mnemonic = [
+  function shuffle(array) {
+    return array.sort(() => Math.random() - 0.5);
+  }
+  const ref = useRef<any>();
+  ref.current = [
     { key: "1", label: "wolf" },
     { key: "2", label: "juice" },
     { key: "3", label: "proud" },
@@ -37,12 +40,14 @@ const Create = () => {
     { key: "11", label: "detail" },
     { key: "12", label: "hub" },
   ];
-
+  useEffect(() => {
+    ref.current = [...shuffle(ref.current)];
+  }, []);
   return (
     <Grid container spacing={0}>
       <Grid item xs={12} lg={12}>
         <BaseCard title="지갑 만들기">
-          <Stack spacing={3}>
+          {/* <Stack spacing={3}>
             <TextField
               id="create-pass"
               label="비밀번호"
@@ -79,9 +84,9 @@ const Create = () => {
                     </IconButton>
                   </InputAdornment>
                 ),
-              }}
-            />
-          </Stack>
+              }} */}
+          {/* />
+          </Stack> */}
           <br />
 
           <Button>지갑 생성하기</Button>
@@ -95,7 +100,7 @@ const Create = () => {
       <Grid item xs={12} lg={12}>
         <BaseCard title="니모닉">
           <Stack spacing={3} direction="row">
-            {mnemonic.map((data, index) => (
+            {ref.current.map((data, index) => (
               <Chip
                 key={data.key + index}
                 label={data.label}
