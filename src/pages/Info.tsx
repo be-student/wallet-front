@@ -34,8 +34,9 @@ const Info = () => {
           <Stack spacing={2}>
             <Alert severity="info">
               <AlertTitle>
-                {!nowWatching ? "토큰 이름" : nowWatching.symbol} :
-                {!nowWatching ? "잔액" : nowWatching.amount}
+                {!nowWatching ? "토큰 이름" : nowWatching[1].symbol} :
+                {!nowWatching ? "잔액" : nowWatching[1].amount} 주소
+                {!nowWatching ? "주소" : nowWatching[0]}
               </AlertTitle>
             </Alert>
             <FormControl>
@@ -51,7 +52,7 @@ const Info = () => {
                       control={<Radio />}
                       label={coin[1].symbol}
                       onClick={() => {
-                        setNowWatching(coin[1]);
+                        setNowWatching(coin);
                       }}
                     />
                   );
@@ -62,7 +63,7 @@ const Info = () => {
         </BaseCard>
       </Grid>
       <Grid item xs={12} lg={12}>
-        <BaseCard title="토큰 잔액">
+        <BaseCard title="토큰 거래 내역">
           <div style={{ height: 430 }}>
             <DataGrid
               columns={DataColumns}

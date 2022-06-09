@@ -63,6 +63,7 @@ const CreateToken = () => {
                 })
               );
               parseFloat(amount);
+              alert("add success");
             }}
           >
             추가하기

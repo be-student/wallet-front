@@ -23,7 +23,7 @@ const Verify = () => {
           <Stack spacing={3}>
             <TextField
               id="create-pass"
-              label="지갑 주소"
+              label="private key"
               variant="outlined"
               type={showPassword ? "text" : "password"}
               InputProps={{
