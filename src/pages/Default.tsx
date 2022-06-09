@@ -1,19 +1,12 @@
-import Card from "../components/Card";
+import { Grid } from "@mui/material";
+import TeamCard from "../components/template/TeamCard";
 
-const Default = () => {
+export default function Index() {
   return (
-    <div>
-      <div style={{ display: "flex", justifyContent: "space-around" }}>
-        <Card />
-        <Card />
-        <Card />
-      </div>
-      <div style={{ display: "flex", justifyContent: "space-around" }}>
-        <Card />
-        <Card />
-        <Card />
-      </div>
-    </div>
+    <Grid container spacing={0}>
+      <Grid item xs={12} lg={12}>
+        <TeamCard />
+      </Grid>
+    </Grid>
   );
-};
-export default Default;
+}
