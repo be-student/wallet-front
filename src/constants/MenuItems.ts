@@ -19,6 +19,11 @@ const Menuitems = [
     icon: "info",
     href: "/main/info",
   },
+  {
+    title: "토큰 발행",
+    icon: "info",
+    href: "/main/create",
+  },
 ];
 
 export default Menuitems;

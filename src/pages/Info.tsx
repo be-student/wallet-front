@@ -11,18 +11,21 @@ import {
   FormLabel,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import { useState } from "react";
 import BaseCard from "../components/template/Card";
 import { DataColumns, Transactions } from "../constants/Info";
+import { useAppSelector } from "../features/core/hooks";
+import { selectCurrentUserData } from "../features/wallet/walletSlice";
 
 const Info = () => {
+  const selector = useAppSelector(selectCurrentUserData);
+  const [nowWatching, setNowWatching] = useState<any>(null);
   return (
     <Grid container spacing={0}>
       <Grid item xs={12} lg={12}>
         <BaseCard title="지갑 주소">
           <Stack spacing={2}>
-            <Typography>
-              0xfs312a2f3E829C0b614566B3E152e417d14q6EP3 {}
-            </Typography>
+            <Typography>{selector.walletAddress}</Typography>
           </Stack>
         </BaseCard>
       </Grid>
@@ -31,31 +34,28 @@ const Info = () => {
           <Stack spacing={2}>
             <Alert severity="info">
               <AlertTitle>
-                토큰 이름 {} : 잔액{}
+                {!nowWatching ? "토큰 이름" : nowWatching.symbol} :
+                {!nowWatching ? "잔액" : nowWatching.amount}
               </AlertTitle>
             </Alert>
             <FormControl>
               <FormLabel id="info-hoose-token">전송할 토큰</FormLabel>
               <RadioGroup
                 aria-labelledby="info-choose-token"
-                defaultValue="ethereum"
                 name="radio-buttons-group"
               >
-                <FormControlLabel
-                  value="ethereum"
-                  control={<Radio />}
-                  label="Ethereum"
-                />
-                <FormControlLabel
-                  value="customToken1"
-                  control={<Radio />}
-                  label="Custom Token 1"
-                />
-                <FormControlLabel
-                  value="customToken2"
-                  control={<Radio />}
-                  label="Custom Token 2"
-                />
+                {Object.entries(selector.coins).map((coin) => {
+                  return (
+                    <FormControlLabel
+                      value={coin[1].symbol}
+                      control={<Radio />}
+                      label={coin[1].symbol}
+                      onClick={() => {
+                        setNowWatching(coin[1]);
+                      }}
+                    />
+                  );
+                })}
               </RadioGroup>
             </FormControl>
           </Stack>

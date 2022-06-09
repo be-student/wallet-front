@@ -10,9 +10,17 @@ import {
 } from "@mui/material";
 
 import PlainLink from "../core/Link";
+import { useAppDispatch, useAppSelector } from "../../features/core/hooks";
+import {
+  onChangeCurrentUser,
+  selectCurrentWallet,
+  selectUsers,
+} from "../../features/wallet/walletSlice";
 const ProfileDD = () => {
   const [anchorEl4, setAnchorEl4] = React.useState<any>(null);
-
+  const currentWallet = useAppSelector(selectCurrentWallet);
+  const allUsers = useAppSelector(selectUsers);
+  const dispatch = useAppDispatch();
   const handleClick4 = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl4(event.currentTarget);
   };
@@ -52,7 +60,7 @@ const ProfileDD = () => {
                 ml: 1,
               }}
             >
-              지갑 주소
+              지갑 주소 {currentWallet.substring(0, 15)}...
             </Typography>
             <FeatherIcon icon="chevron-down" width="20" height="20" />
           </Box>
@@ -66,11 +74,11 @@ const ProfileDD = () => {
         onClose={handleClose4}
         sx={{
           "& .MuiMenu-paper": {
-            width: "230px",
+            minWidth: "230px",
           },
         }}
       >
-        <PlainLink to="/create">
+        <PlainLink to="/createWallet">
           <ListItemText
             style={{
               textAlign: "center",
@@ -78,6 +86,22 @@ const ProfileDD = () => {
             primary="계정 생성"
           />
         </PlainLink>
+        <Divider />
+        {allUsers.map((user) => {
+          return (
+            user.visible && (
+              <div
+                onClick={() => {
+                  dispatch(onChangeCurrentUser(user.walletAddress));
+                }}
+                style={{ padding: "0.5rem 0.5rem" }}
+                key={user.walletAddress}
+              >
+                {user.walletAddress}
+              </div>
+            )
+          );
+        })}
         <Divider />
         <PlainLink to="/verify">
           <Button fullWidth variant="contained" color="primary">
