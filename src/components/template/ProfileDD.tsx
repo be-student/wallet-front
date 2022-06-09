@@ -7,12 +7,14 @@ import {
   ListItemText,
   Button,
   Divider,
+  ButtonBase,
 } from "@mui/material";
 
 import PlainLink from "../core/Link";
 import { useAppDispatch, useAppSelector } from "../../features/core/hooks";
 import {
   onChangeCurrentUser,
+  onHideUser,
   selectCurrentWallet,
   selectUsers,
 } from "../../features/wallet/walletSlice";
@@ -98,6 +100,17 @@ const ProfileDD = () => {
                 key={user.walletAddress}
               >
                 {user.walletAddress}
+                <ButtonBase
+                  style={{
+                    padding: "0.3rem 0.3rem",
+                    margin: "0rem 0.5rem",
+                    backgroundColor: "#06B2BD",
+                    borderRadius: "5px",
+                  }}
+                  onClick={() => dispatch(onHideUser(user.walletAddress))}
+                >
+                  X
+                </ButtonBase>
               </div>
             )
           );
@@ -105,7 +118,7 @@ const ProfileDD = () => {
         <Divider />
         <PlainLink to="/verify">
           <Button fullWidth variant="contained" color="primary">
-            지갑 연결 / 지갑 연결 해제
+            지갑 연결
           </Button>
         </PlainLink>
       </Menu>

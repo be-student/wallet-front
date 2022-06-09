@@ -166,6 +166,13 @@ export const walletSlice = createSlice({
           newTargetData);
       alert("전송 성공");
     },
+
+    onHideUser: (state, action: PayloadAction<string>) => {
+      const currentUserIndex = state.users.findIndex(
+        (user) => user.walletAddress === state.currentWallet
+      );
+      state.users[currentUserIndex].visible = false;
+    },
   },
 });
 
@@ -174,6 +181,7 @@ export const {
   onCreateToken,
   onChangeCurrentUser,
   onChangeUserCoinVisible,
+  onHideUser,
   onSendToken,
 } = walletSlice.actions;
 
