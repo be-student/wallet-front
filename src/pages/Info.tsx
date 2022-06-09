@@ -34,9 +34,9 @@ const Info = () => {
           <Stack spacing={2}>
             <Alert severity="info">
               <AlertTitle>
-                {!nowWatching ? "토큰 이름" : nowWatching[1].symbol} :
-                {!nowWatching ? "잔액" : nowWatching[1].amount} 주소
-                {!nowWatching ? "주소" : nowWatching[0]}
+                {!nowWatching ? "{토큰 이름}" : nowWatching[1].symbol} :
+                {!nowWatching ? "{잔액}" : nowWatching[1].amount} 주소
+                {!nowWatching ? "{주소}" : nowWatching[0]}
               </AlertTitle>
             </Alert>
             <FormControl>
@@ -48,7 +48,7 @@ const Info = () => {
                 {Object.entries(selector.coins).map((coin) => {
                   return (
                     <FormControlLabel
-                      value={coin[1].symbol}
+                      value={coin[0]}
                       control={<Radio />}
                       label={coin[1].symbol}
                       onClick={() => {

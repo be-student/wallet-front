@@ -33,7 +33,6 @@ const CreateWallet = () => {
         <BaseCard title="지갑 만들기">
           <Button
             onClick={() => {
-              console.log("crete user");
               dispatch(
                 createUser({
                   privateKey,

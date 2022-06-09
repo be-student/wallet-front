@@ -1,3 +1,4 @@
 export function shuffle(array: Array<any>) {
-  return array.sort(() => Math.random() - 0.5);
+  const copy = [...array];
+  return copy.sort(() => Math.random() - 0.5);
 }
